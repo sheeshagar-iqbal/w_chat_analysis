@@ -5,7 +5,8 @@ import pandas as pd
 from urlextract import URLExtract
 import emoji
 urlextracter =URLExtract()
-
+import nltk
+nltk.download('stopwords')
 
 def fatch_stats(selected_user,df):
 
