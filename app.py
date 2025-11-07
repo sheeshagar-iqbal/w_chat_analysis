@@ -121,5 +121,7 @@ if uploaded_file is not None:
                 st.dataframe(df_e)
             with col8:
                 fig,ax= plt.subplots()
-                ax.pie(df_e[1].head(),labels=df_e[0].head())
+                # Try to use an emoji-supporting font
+                plt.rcParams['font.family'] = 'Segoe UI Emoji'  # or 'Noto Color Emoji', 'Apple Color Emoji
+                ax.pie(df_e[1].head(),labels=df_e[0].head(),autopct='%1.1f%%', startangle=90)
                 st.pyplot(fig)    
