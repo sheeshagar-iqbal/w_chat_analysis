@@ -43,7 +43,7 @@ def create_wordcloud(selected_user,df):
     if selected_user !='Overall':
         df =df[df['user']==selected_user]
 
-    f= open(r"C:\Users\sheeshragar\Downloads\stop_hinglish.txt",'r')
+    f= open("stop_hinglish - Copy.txt",'r')
     stop_word= f.read()    
     temp=df[df['message']!='<Media omitted>\n']
     temp= temp[temp['user']!= 'system']
