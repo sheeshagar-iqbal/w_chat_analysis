@@ -24,16 +24,19 @@ def preprocess(data):
     users=[]
     messages=[]
     for item in df['user_message']:
-        entry= re.split(r'^(.*?):\s', item, maxsplit=1)
+        # r'^(.*?)[=:]\s*' text number
+        # r'^(.*?):\s' only text
+        entry= re.split(r'^(.*?)[=:]\s*', item, maxsplit=1)
         if entry[1:]:
             users.append(entry[1])
             messages.append(entry[2])
-        # else:
-        #     users.append('system')
-        #     messages.append(entry[0])
+        else:
+            users.append('system')
+            messages.append(entry[0])
 
     df['user']= users
     df['message']= messages
+
 
     df['year']=df['date'].dt.year
     df['month']= df['date'].dt.month_name()
