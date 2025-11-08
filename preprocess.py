@@ -28,9 +28,9 @@ def preprocess(data):
         if entry[1:]:
             users.append(entry[1])
             messages.append(entry[2])
-        else:
-            users.append('system')
-            messages.append(entry[0])
+        # else:
+        #     users.append('system')
+        #     messages.append(entry[0])
 
     df['user']= users
     df['message']= messages

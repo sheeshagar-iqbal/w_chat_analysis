@@ -20,7 +20,7 @@ if uploaded_file is not None:
 
     user_list= df['user'].unique().tolist()
 
-    user_list.remove('system')
+    # user_list.remove('system')
     user_list.sort()
     user_list.insert(0,'Overall')
 
