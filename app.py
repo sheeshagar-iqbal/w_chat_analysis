@@ -7,8 +7,12 @@ st.sidebar.title('Whatsapp chat analyizer')
 uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
     # st.write("Filename:", uploaded_file.name)
-    bytes_data=uploaded_file.getvalue()
-    data= bytes_data.decode('utf-8')
+    try:
+        bytes_data=uploaded_file.getvalue()
+        data= bytes_data.decode('utf-8')
+    except UnicodeDecodeError:
+        # fallback for other encodings (like 'utf-16' or 'latin-1')
+        data = uploaded_file.getvalue().decode('latin-1')    
     # st.text(data)
 
     df=preprocess.preprocess(data)
