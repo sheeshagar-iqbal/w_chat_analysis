@@ -11,16 +11,26 @@ def preprocess(data):
     df.rename(columns={ 'message_date' : 'date' },inplace=True)
 
 
+    # users=[]
+    # messages=[]
+    # for item in df['user_message']:
+    #     if ': ' in item:   # only split if ':' is present
+    #         user,msg = item.split(': ', 1)
+    #         users.append(user)
+    #         messages.append(msg)
+    #     else:
+    #         users.append('system')   # for system messages like encryption info
+    #         messages.append(item)
     users=[]
     messages=[]
     for item in df['user_message']:
-        if ': ' in item:   # only split if ':' is present
-            user,msg = item.split(': ', 1)
-            users.append(user)
-            messages.append(msg)
+        entry= re.split(r'^(.*?):\s', item, maxsplit=1)
+        if entry[1:]:
+            users.append(entry[1])
+            messages.append(entry[2])
         else:
-            users.append('system')   # for system messages like encryption info
-            messages.append(item)
+            users.append('system')
+            messages.append(entry[0])
 
     df['user']= users
     df['message']= messages
