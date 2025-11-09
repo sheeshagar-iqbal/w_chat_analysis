@@ -7,4 +7,5 @@ pandas==2.3.3
 emoji == 2.15.0
 nltk==3.9.2
 numpy==2.3.4
+chardet==5.2.0
 # 3.12.7

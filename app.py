@@ -2,6 +2,7 @@ import streamlit as st
 import preprocess,helper
 import matplotlib.pyplot as plt
 import seaborn as sns
+import chardet
 st.sidebar.title('Whatsapp chat analyizer')
 
 uploaded_file = st.sidebar.file_uploader("Choose a file")
@@ -12,7 +13,9 @@ if uploaded_file is not None:
         data= bytes_data.decode('utf-8')
     except UnicodeDecodeError:
         # fallback for other encodings (like 'utf-16' or 'latin-1')
-        data = uploaded_file.getvalue().decode('utf-16')    
+        raw = uploaded_file.getvalue()
+        enc = chardet.detect(raw)['encoding']
+        data = raw.decode(enc or 'utf-16', errors='ignore')    
     # st.text(data)
     if not data.strip():
         st.error("Uploaded file is empty or could not be processed. Please re-upload.")
