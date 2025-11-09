@@ -1,8 +1,10 @@
-streamlit
-matplotlib
-seaborn
-urlextract
-wordcloud
-pandas
-emoji
-nltk
+streamlit= 1.51.0
+matplotlib=3.10.7
+seaborn=0.13.2
+urlextract= 1.9.0
+wordcloud= 1.9.4
+pandas=2.3.3
+emoji = 2.15.0
+nltk=3.9.2
+numpy=2.3.4
+# 3.12.7
