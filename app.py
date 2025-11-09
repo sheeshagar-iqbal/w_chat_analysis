@@ -12,11 +12,21 @@ if uploaded_file is not None:
         data= bytes_data.decode('utf-8')
     except UnicodeDecodeError:
         # fallback for other encodings (like 'utf-16' or 'latin-1')
-        data = uploaded_file.getvalue().decode('latin-1')    
+        data = uploaded_file.getvalue().decode('utf-16')    
     # st.text(data)
+    if not data.strip():
+        st.error("Uploaded file is empty or could not be processed. Please re-upload.")
+        st.stop()
+
+
 
     df=preprocess.preprocess(data)
     # st.dataframe(df)
+
+        # ✅ Check if DataFrame actually has rows
+    if df.empty:
+        st.error("File loaded, but no messages were found. Try re-uploading or using UTF-8 format.")
+        st.stop()
 
     user_list= df['user'].unique().tolist()
 
@@ -68,19 +78,25 @@ if uploaded_file is not None:
 
         with col10:
             month= helper.month_activity_map(selected_user,df)
-            fig,ax= plt.subplots()
-            ax.bar(month.index,month.values,color='red')
-            plt.xticks(rotation= 'vertical')
-            st.pyplot(fig)
+            if month.empty:
+                pass
+            else:
+                fig,ax= plt.subplots()
+                ax.bar(month.index,month.values,color='red')
+                plt.xticks(rotation= 'vertical')
+                st.pyplot(fig)
 
 
             #  which time user activity action 
         st.title('Weekly Activity Map')    
         activity_time= helper.activity_heatmap(selected_user,df)
-        fig,ax= plt.subplots()
-        ax= sns.heatmap(activity_time)
-        plt.xticks(rotation= 'vertical')
-        st.pyplot(fig)            
+        if activity_time.empty:
+            pass
+        else:
+            fig,ax= plt.subplots()
+            ax= sns.heatmap(activity_time)
+            plt.xticks(rotation= 'vertical')
+            st.pyplot(fig)            
 
 
 # bar most busy user
