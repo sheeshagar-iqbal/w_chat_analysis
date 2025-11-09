@@ -2,7 +2,13 @@ import re
 import pandas as pd
 
 def preprocess(data):
-    pattern = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s'
+    # WhatsApp exports (e.g. 12/03/2023, 7:45 - User:)
+    # pattern = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s'
+    # This pattern covers:
+    # 12/03/2023, 7:45 -
+    # 12/03/23, 07:45 pm -
+    # 12/03/23, 07:45 AM -
+    pattern = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}(?:\s?[ap]m)?\s?-\s'
     dates = re.findall(pattern, data)
     messages = re.split(pattern, data)[1:]
 
